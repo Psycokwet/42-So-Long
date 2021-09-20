@@ -47,7 +47,7 @@
 # define MAP_EXT				".ber"
 # define SAVE_ARG				"--save"
 # define USAGE					"Usage : MAP.ber [--save]"
-# define INSIDE_MAX_TYPE		5
+# define INSIDE_MAX_TYPE		4
 # define INSIDE					"0CEP"
 # define WALL					"1"
 # define AUTHORIZED_ON_MAP_WALL			'1'

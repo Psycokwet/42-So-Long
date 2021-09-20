@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/19 23:40:05 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/20 16:24:40 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ int		id_required(int i_width, int i_height, int index_parser, t_env *env)
 	}
 	if(g_map_parsings[index_parser].single == false)
 		return (EXIT_SUCCESS);
-	quit_app(env, "The argument have already been set", -EXIT_ARGS_FAILURE);
-	return (EXIT_FAILURE);
+	return (-EXIT_FAILURE);
 }
 
 int	test_line_for_map_int(char *line, t_env *env, int i_height, int i_width)
