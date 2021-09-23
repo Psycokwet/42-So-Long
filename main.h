@@ -116,6 +116,24 @@ typedef struct			s_map_array
 # define MAX_IMGS		7
 # define MAX_TEX		4
 
+
+# define EXIT_SRC		"./assets/exit.xpm"
+# define WALL_SRC		"./assets/walls.xpm"
+# define COLLECTIBLE_SRC		"./assets/collectibles.xpm"
+# define MAIN_SRC		"./assets/main.xpm"
+# define PATROL_SRC		"./assets/patrol.xpm"
+
+typedef struct			s_block_properties
+{
+	char				id;
+	char				*src;
+	int					(*draw)(void *, t_coordinates start, int index_id_block);
+	int					(*effect)(void *, t_coordinates block);
+	t_data				tex;
+	//data of the texture
+}						t_block_properties;
+
+#define MAX_BLOCKS_PROPERTIES 4
 typedef struct		s_env
 {
 	int				required[REQUIRED_QT];
@@ -130,6 +148,7 @@ typedef struct		s_env
 	t_data			textures[MAX_TEX];
 	int				count;
 	int				quitting;
+	t_block_properties blocks_properties[MAX_BLOCKS_PROPERTIES];
 }					t_env;
 
 typedef struct			s_parsing

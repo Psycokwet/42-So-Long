@@ -1,0 +1,30 @@
+/* XPM */
+static char *_5fada4aefe24d26b29c79e8a5fb65577PJxLXHHbZT8ybBr[] = {
+/* columns rows colors chars-per-pixel */
+"112 16 8 1 ",
+"  c None",
+". c #213038",
+"X c #437DA0",
+"o c #9A2890",
+"O c #4D92BC",
+"+ c #D8B78F",
+"@ c #FFD7A8",
+"# c white",
+/* pixels */
+"  ...........     ...........     ...........        .........    ...XXXOOOOO.    ...........     ...XX.OOOOO.  ",
+" ..XXX.OOOOOO.   ..XXX.OOOOOO.   ..XXX.OOOOOO.    ...XXXOOOOOO.  ..XXX.XOOOOOO.  ..XXX.OOOOOO.   ..X...XOOOOOO. ",
+".o.X#.#XOOOOOO. .o.X#.#XOOOOOO. .o.X#.#XOOOOOO.  ..XXX.XOOOOOO. .o.X#.XXO.OOO.. .o.X#.#XOOOOOO. .o..###.O.OOO.. ",
+".o.X#.#XO.OOO.. .o.X#.#XO.OOO.. .o.X#.#XO.OOO.. .o.X#.XXO.OOO.. .o.X#.#XOOOOOO. .o.X#.#XO.OOO.. .o..###.OOOOOO. ",
+"...X#.#XOOOOOO. ...X#.#XOOOOOO. ...X#.#XOOOOOO. .o.X#.#XOOOOOO. ...X#.#XOOOOOO. ...X#.#XOOOOOO. ....###.OOOOOO. ",
+" .o.XXXXOOOOOO.  .o.XXXXOOOOOO.  .o.XXXXOOOOOO. ...X#.#XOOOOOO.  .o.XXXOOOOOOO.  .o.XXXXOOOOOO.  .o..#.OOOOOOO. ",
+" .o.XXXXOOOOOO.  .o.XXXXOOOOOO.  .o.XXXXOOOOOO.  .o.XXXOOOOOOO.  .o.XXXXOOOO...  .o.XXXXOOOOOO.  .o..#.XOOOO... ",
+" ...XXXXXO.....  ...XXXXXO.....  ...XXXXXO.....  .o.XXXXOOOO...  ...XXXXXO..     ...XXXXXO.....  ...X.XXXO..    ",
+"   ..XXOOOO.       ..XXOOOO.       ..XXOOOO.     ....XXXXO..       ..XXOOOO.       ..XXOOOO.       ..XXOOOO.    ",
+"    .X+@@@@.        .X+@@@@.        .X+@@@@.        .X+@@@@.        .X+@@@@.        .X+@@@@.        .X+@@@@.    ",
+"  ...X+@@@@.      ...X+@@@@.      ...X+@@@@.         .X+@@@@.       .X+@@@@.      ...X+@@@@.        .X+@@@@.    ",
+"  .OOX+@@@@.      .OOX..@@@.      .OOX+@@@@.       ..OX+@@@@..    ..OX+@@@@..     .OOX+@@@@.      ..OX+@@@@..   ",
+"  ..XXXO++O.      ..XXOO.+O.      ..XXXO++O.       .OXXXO++OO.    .OXXXO++OO.     ..XXXO++O.      .OXXXO++OO.   ",
+"   ..XOOOOO.       ..XXX.OO.       ..XOOOOO.       ...XOO.OXX.    ...XOOOOXX.      ..XOOOOO.      ...XOOOOXX.   ",
+"    .XO..XO.         ....O.         .XO..XO.         .XO.....       .XO.....        .XO..XO.        .XO.....    ",
+"    .X. .X.            .X.          .X.#.X.          .X.            .X.             .X. .X.         .X.         "
+};

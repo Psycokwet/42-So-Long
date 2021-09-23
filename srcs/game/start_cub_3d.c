@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/23 12:53:21 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/23 16:29:10 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,27 +302,42 @@ int	correct_max_dimension(t_env *env)
 	return (EXIT_SUCCESS);
 }
 
-// int	init_textures(t_env *env)
-// {
-// 	int i;
+int	init_texture(t_env *env, char* src, t_data* tex)
+{
+	tex->img = mlx_xpm_file_to_image(env->mlx,
+	env->blocks_properties->src, &tex->w, &tex->h);
+	if (!tex->img){printf("GAIL HERE [%s]\n", src);
+		return (-EXIT_FAILURE);}
+	tex->addr = mlx_get_data_addr(tex->img,
+	&tex->bits_per_pixel, &tex->line_length,
+	&tex->endian);
+	if(!tex->img)
+		return (-EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
 
-// 	i = 0;
-// 	while (i < MAX_TEX)
-// 	{
-// 		env->textures[i].img = mlx_xpm_file_to_image(env->mlx,
-// 		env->g_srcs[i].src, &env->textures[i].w, &env->textures[i].h);
-// 		if(!env->textures[i].img)
-// 			return (-EXIT_FAILURE);
-// 		env->textures[i].addr = mlx_get_data_addr(env->textures[i].img,
-// 		&env->textures[i].bits_per_pixel, &env->textures[i].line_length,
-// 		&env->textures[i].endian);
-// 		if(!env->textures[i].img)
-// 			return (-EXIT_FAILURE);
-// 		i++;
-// 	}
-// 	return (EXIT_SUCCESS);
-// }
+int	init_textures(t_env *env)
+{
+	int i;
 
+	i = -1;
+	while (i++ < MAX_BLOCKS_PROPERTIES){
+		if (init_texture(env, env->blocks_properties[i].src, &env->blocks_properties[i].tex) < EXIT_SUCCESS)
+			return (-EXIT_FAILURE);}
+	return (EXIT_SUCCESS);
+}
+
+int	init_blocks_properties(t_env *env)
+{
+	int i;
+
+	i = 0;
+	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_EXIT, EXIT_SRC, NULL, NULL, (t_data){}};
+	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_WALL, WALL_SRC, NULL, NULL, (t_data){}};
+	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_COLLECTIBLE, COLLECTIBLE_SRC, NULL, NULL, (t_data){}};
+	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_PATROL, PATROL_SRC, NULL, NULL, (t_data){}};
+	return (init_textures(env));
+}
 
 void	start_cub_3d(t_env *env)
 {
@@ -330,9 +345,9 @@ void	start_cub_3d(t_env *env)
 	env->count = 0;
     env->mlx = mlx_init();
 	if (correct_max_dimension(env) < EXIT_SUCCESS)
-		quit_app(env, "The map is too big for the screen\n", -EXIT_FAILURE);
-	// if (init_textures(env) != EXIT_SUCCESS)
-	// 	quit_app(env, "Error encountered while initializing textures, the files may not exist\n", -EXIT_FAILURE);
+		quit_app(env, "The map is too big for the screen", -EXIT_FAILURE);
+	if (init_blocks_properties(env) < EXIT_SUCCESS)
+		quit_app(env, "Error encountered while initializing textures, the files may not exist", -EXIT_FAILURE);
 	
 
     env->win = mlx_new_window(env->mlx, env->win_max_dimensions.x, env->win_max_dimensions.y, "So long !");
