@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/23 16:29:10 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/23 16:54:32 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,9 +321,11 @@ int	init_textures(t_env *env)
 	int i;
 
 	i = -1;
-	while (i++ < MAX_BLOCKS_PROPERTIES){
+	while (i++ < MAX_BLOCKS_PROPERTIES)
 		if (init_texture(env, env->blocks_properties[i].src, &env->blocks_properties[i].tex) < EXIT_SUCCESS)
-			return (-EXIT_FAILURE);}
+			return (-EXIT_FAILURE);
+	if (init_texture(env, env->main.src, &env->main.tex) < EXIT_SUCCESS)
+		return (-EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
@@ -336,6 +338,7 @@ int	init_blocks_properties(t_env *env)
 	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_WALL, WALL_SRC, NULL, NULL, (t_data){}};
 	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_COLLECTIBLE, COLLECTIBLE_SRC, NULL, NULL, (t_data){}};
 	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_PATROL, PATROL_SRC, NULL, NULL, (t_data){}};
+	env->main = (t_main_character){MAIN_SRC, NULL, 0, (t_data){}};
 	return (init_textures(env));
 }
 
