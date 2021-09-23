@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/20 16:24:40 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/23 13:06:45 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 int		id_pos(int i_width, int i_height, int index_parser, t_env *env)
 {
 	id_required(i_width, i_height, index_parser, env);
-	env->current_pos = (t_coordinates){i_width + 0.5F, i_height + 0.5F};
+	env->current_pos = (t_coordinates){i_width, i_height};
+	printf("RUNNING NEW POS %d:%d\n", env->current_pos.x, env->current_pos.y);
+
 	return (EXIT_SUCCESS);
 }
 

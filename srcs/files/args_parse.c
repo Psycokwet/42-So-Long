@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/20 16:14:57 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/20 22:33:09 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,6 @@ int		check_map_for_holes(t_env *env)
 	return (EXIT_SUCCESS);
 }
 
-int		check_min_dimension(t_env *env)
-{
-	// if (env->r.width <= 0)
-	// 	return (-EXIT_FAILURE);
-	// if (env->r.height <= 0)
-	// 	return (-EXIT_FAILURE);
-	// return (EXIT_SUCCESS);
-}
-
 int		check_min_requirements(t_env *env)
 {
 	int	i;
@@ -75,10 +66,6 @@ int		check_min_requirements(t_env *env)
 			return (-EXIT_FAILURE);
 		i++;
 	}
-	// if (env->r.width <= 0)
-	// 	return (-EXIT_FAILURE);
-	// if (env->r.height <= 0)
-	// 	return (-EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
@@ -104,7 +91,4 @@ void	args_parse(t_env *env, int argc, char const *argv[])
 		quit_app(env, "Error, the map contains holes", -EXIT_FAILURE);
 	if (check_min_requirements(env) < EXIT_SUCCESS)
 		quit_app(env, "Lacking required minimum elements on map", -EXIT_FAILURE);
-	// if (check_min_dimension(env) < EXIT_SUCCESS)
-	// 	quit_app(env, "Error, the width or height are null", -EXIT_FAILURE);
-	quit_app(env, "Succes as of yet", -EXIT_ARGS_FAILURE);
 }

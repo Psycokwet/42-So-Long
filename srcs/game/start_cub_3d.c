@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/19 23:09:31 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/23 12:53:21 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,23 +179,6 @@
 
 // }
 
-// void	print_img(t_env *env)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	if (env->imgs[i].img != NULL)
-// 		mlx_destroy_image(env->mlx, env->imgs[i].img);
-
-//     env->imgs[i].img = mlx_new_image(env->mlx, env->r.width, env->r.height);
-//     env->imgs[i].addr = mlx_get_data_addr(env->imgs[i].img,	&env->imgs[i].bits_per_pixel, &env->imgs[i].line_length, &env->imgs[i].endian);
-
-// 	draw_ceiling_floor(&env->imgs[i], env);
-// 	draw_walls(&env->imgs[i], env);
-
-//     mlx_put_image_to_window(env->mlx, env->win, env->imgs[i].img, 0, 0);
-
-// }
 
 // // int             key_press(int keycode, t_env *env)
 // // {
@@ -216,57 +199,51 @@
 // 	return keycode;
 // }
 
-// int             key_press(int keycode, t_env *env)
-// {
-// 	int i;
+int             key_press(int keycode, t_env *env)
+{
+	int i;
 
-// 	i = -1;
-// 	while (i++ < MAX_ACTIONS - 1)
-// 		if (keycode == env->actions[i].keycode)
-// 		{
-// 			env->actions[i].is_asked = 1;
-// 			break ;
-// 		}
-// 	return keycode;
-// }
+	i = -1;
+	while (i++ < MAX_ACTIONS - 1)
+		if (keycode == g_actions[i].keycode)
+		{
+			g_actions[i].fun(env);
+			break ;
+		}
+	return keycode;
+}
 
-// int		quit_cub3d(t_env *env)
-// {
-// 	printf("QUITTING ! \n");
-// 	// mlx_destroy_image(env->mlx, game->screen.ptr);
-// 	mlx_destroy_window(env->mlx, env->win);
-// 	// free_env(env);
-// }
+int		close_window(t_env *env)
+{
+	env->quitting = true;
+	return (0);
+}
 
-// int		close_window(t_env *env)
-// {
-// 	env->actions[ESCAPE_ID].is_asked = 1;
-// 	return (0);
-// }
+int		game_loop(t_env *env)
+{
+	if(env->win){
+		print_img(env);
+		// img.img = mlx_new_image(env->mlx, env->r.width, env->r.height);
+		// img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+        //                          &img.endian);
+		// my_mlx_pixel_put(&img, env->r.width-1, env->r.height-1, MASK_B); //de 0 a width -1 ou a height -1
+		// mlx_put_image_to_window(env->mlx, env->win, img.img, 0, 0);
+	}
 
-// int		game_loop(t_env *env)
-// {
-// 	if(env->win){
-// 		print_img(env);
-// 		// img.img = mlx_new_image(env->mlx, env->r.width, env->r.height);
-// 		// img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-//         //                          &img.endian);
-// 		// my_mlx_pixel_put(&img, env->r.width-1, env->r.height-1, MASK_B); //de 0 a width -1 ou a height -1
-// 		// mlx_put_image_to_window(env->mlx, env->win, img.img, 0, 0);
-// 	}
+	// int i;
 
-// 	int i;
-
-// 	i = -1;
-// 	while (i++ < MAX_ACTIONS)
-// 	{
-// 		if (env->actions[i].is_asked == 1)
-// 		{
-// 			env->actions[i].fun(env);
-// 		}
-// 	}
-// 	return (0);
-// }
+	// i = -1;
+	// while (i++ < MAX_ACTIONS)
+	// {
+	// 	if (g_actions[i].is_asked == 1)
+	// 	{
+	// 		env->actions[i].fun(env);
+	// 	}
+	// }
+	if(env->quitting == true)
+		g_actions[XK_Escape].fun(env);
+	return (0);
+}
 
 // int rotate_left(t_env *env)
 // {
@@ -280,33 +257,6 @@
 // 	return (EXIT_SUCCESS);
 // }
 
-// int run_up(t_env *env)
-// {
-// 	env->try_to_run_dir.y-= QUOTIENT_MOVE;
-// 	env->actions[ACTUALLY_RUN].is_asked = 1;
-// 	return (EXIT_SUCCESS);
-// }
-
-// int run_down(t_env *env)
-// {
-// 	env->try_to_run_dir.y+= QUOTIENT_MOVE;
-// 	env->actions[ACTUALLY_RUN].is_asked = 1;
-// 	return (EXIT_SUCCESS);
-// }
-
-// int run_right(t_env *env)
-// {
-// 	env->try_to_run_dir.x+= QUOTIENT_MOVE;
-// 	env->actions[ACTUALLY_RUN].is_asked = 1;
-// 	return (EXIT_SUCCESS);
-// }
-
-// int run_left(t_env *env)
-// {
-// 	env->try_to_run_dir.x-= QUOTIENT_MOVE;
-// 	env->actions[ACTUALLY_RUN].is_asked = 1;
-// 	return (EXIT_SUCCESS);
-// }
 
 // t_coordinates calc_run_dir(t_env *env)
 // {
@@ -325,68 +275,32 @@
 // 	return (run_dir);
 // }
 
-// int actually_run(t_env *env)
-// {
-// 	// printf("RUNNING %f:%f\n", env->current_pos.x, env->current_pos.y);
-// 	// printf("DURECTION %f:%f\n", env->direction.x, env->direction.y);
-// // 	printf("try_to_run_dir %f:%f\n", env->try_to_run_dir.x, env->try_to_run_dir.y);
 
-// 	env->actions[ACTUALLY_RUN].is_asked = 0;
+void	init_imgs(t_env *env)
+{
+	int i;
 
-// 	t_coordinates run_dir = calc_run_dir(env);
-// 	t_coordinates new_pos = (t_coordinates){env->current_pos.x + run_dir.x * RUN_STEP, env->current_pos.y + run_dir.y * RUN_STEP};
+	i = -1;
+	while (i++ < MAX_IMGS - 1)
+		env->imgs[i] = (t_data){NULL, NULL, -1, -1, -1, -1, -1};
+}
 
-// 	if(env->map_array.lines[(int)(new_pos.y + (env->try_to_run_dir.y * WALL_HIT_BOX))]->line[(int)(env->current_pos.x)] != '1') // (new_pos.x + (env->try_to_run_dir.x * WALL_HIT_BOX)))
-// 	// {
-// 		// printf("%c\n", env->map_array.lines[(int)(new_pos.y + (env->try_to_run_dir.y * WALL_HIT_BOX))]->line[(int)(env->current_pos.x)]);
-// 		env->current_pos.y = new_pos.y;
-// 	// }
-// 	if(env->map_array.lines[(int)(env->current_pos.y)]->line[(int)(new_pos.x + (env->try_to_run_dir.x * WALL_HIT_BOX))] != '1') // 
-// 		env->current_pos.x = new_pos.x;
-// 	// printf("RUNNING NEW POS %f:%f\n", new_pos.x, new_pos.y);
-// 	env->try_to_run_dir = (t_coordinates){0, 0};
-// 	return (EXIT_SUCCESS);
-// }
+int	correct_max_dimension(t_env *env)
+{
+	int sizex;
+	int sizey;
 
-// void	init_actions(t_env *env)
-// {
-// 	env->actions[ESCAPE_ID] = (t_action){0, XK_Escape, &quit_cub3d};
-// 	env->actions[ROTATE_LEFT_ID] = (t_action){0, XK_Left, &rotate_left};
-// 	env->actions[ROTATE_RIGHT_ID] = (t_action){0, XK_Right, &rotate_rigth};
-// 	env->actions[GO_LEFT_A_ID] = (t_action){0, XK_a, &run_left};
-// 	env->actions[GO_RIGTH_D_ID] = (t_action){0, XK_d, &run_right};
-// 	env->actions[GO_BACK_S_ID] = (t_action){0, XK_s, &run_down};
-// 	env->actions[GO_FRONT_W_ID] = (t_action){0, XK_w, &run_up};
-// 	env->actions[ACTUALLY_RUN] = (t_action){0, -1, &actually_run};
-// }
-
-// void	init_imgs(t_env *env)
-// {
-// 	int i;
-
-// 	i = -1;
-// 	while (i++ < MAX_IMGS - 1)
-// 		env->imgs[i] = (t_data){NULL, NULL, -1, -1, -1};
-// }
-
-// void	correct_max_dimension(t_env *env)
-// {
-// 	int sizex;
-// 	int sizey;
-
-// 	sizex = 0;
-// 	sizey = 0;
-// 	mlx_get_screen_size(env->mlx, &sizex, &sizey);
-// 	if(sizex < env->r.width)
-// 		env->r.width = sizex;
-// 	if(sizey < env->r.height)
-// 		env->r.height = sizey;
-// }
-
-// void	init_fov(t_env *env)
-// {
-// 	env->fov_angle = FOV * M_PI / (MAX_DEGREES / 2);
-// }
+	sizex = 0;
+	sizey = 0;
+	mlx_get_screen_size(env->mlx, &sizex, &sizey);
+	if(sizex < (env->map_array.width * TILE_SIZE))
+		return (-EXIT_FAILURE);
+	if(sizey < (env->map_array.height * TILE_SIZE))
+		return (-EXIT_FAILURE);
+	env->win_max_dimensions.x = env->map_array.width * TILE_SIZE;
+	env->win_max_dimensions.y = env->map_array.height * TILE_SIZE;
+	return (EXIT_SUCCESS);
+}
 
 // int	init_textures(t_env *env)
 // {
@@ -409,46 +323,29 @@
 // 	return (EXIT_SUCCESS);
 // }
 
-// void	plane_calc(t_cartesian_vector dir, t_cartesian_vector *plane, float angle)
-// {
-// 	plane->dir.x = dir.dir.x;
-// 	plane->dir.y = dir.dir.y;
-// 	rotation(plane, angle);
-// 	plane->dir.x *= tan(angle / 2);
-// 	plane->dir.y *= tan(angle / 2);
-// }
-
 
 void	start_cub_3d(t_env *env)
 {
-	// init_actions(env);
-	// init_imgs(env);
-	// init_fov(env);
-	// env->count = 0;
-    // env->mlx = mlx_init();
-	// correct_max_dimension(env);
-	// if (init_textures(env) != EXIT_SUCCESS){
-	// 	printf("Error encountered while initializing textures, the files may not exist\n");
-	// 	free_env(env);
-	// 	exit(-EXIT_FAILURE);
-	// }
-	// t_cartesian_vector dir = {};
-	// t_cartesian_vector plane = {};
-	// plane_calc(dir, &plane, 90);
-	// printf("PLANE %f:%f\n", plane.dir.x, plane.dir.y);
-	// printf("PLANE %f\n",  2 * atan(0.66/1.0));
+	init_imgs(env);
+	env->count = 0;
+    env->mlx = mlx_init();
+	if (correct_max_dimension(env) < EXIT_SUCCESS)
+		quit_app(env, "The map is too big for the screen\n", -EXIT_FAILURE);
+	// if (init_textures(env) != EXIT_SUCCESS)
+	// 	quit_app(env, "Error encountered while initializing textures, the files may not exist\n", -EXIT_FAILURE);
+	
 
-    // env->win = mlx_new_window(env->mlx, env->r.width, env->r.height, "Cub3D");
+    env->win = mlx_new_window(env->mlx, env->win_max_dimensions.x, env->win_max_dimensions.y, "So long !");
 
-	// print_img(env);
+	print_img(env);
 
 	// // mlx_hook(env->win, DestroyNotify, StructureNotifyMask, key_hook, (void *)0);
 
-	// mlx_hook(env->win, KeyPress, KeyPressMask, key_press, env);
+	mlx_hook(env->win, KeyPress, KeyPressMask, key_press, env);
 	// mlx_hook(env->win, KeyRelease, KeyReleaseMask, key_release, env);
-	// mlx_hook(env->win, DestroyNotify, StructureNotifyMask, close_window, env);
-	// mlx_loop_hook(env->mlx, game_loop, env);
-    // mlx_loop(env->mlx);
+	mlx_hook(env->win, DestroyNotify, StructureNotifyMask, close_window, env);
+	mlx_loop_hook(env->mlx, game_loop, env);
+    mlx_loop(env->mlx);
 
 	// free_env(env);
 }

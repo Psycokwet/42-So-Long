@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/19 23:30:25 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/23 12:45:14 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(int argc, char const *argv[]){
 
 	ft_bzero(&env, sizeof(t_env));
 	args_parse(&env, argc, argv);
-	// start_cub_3d(&env);
+	start_cub_3d(&env);
 	return (0);
 }
 

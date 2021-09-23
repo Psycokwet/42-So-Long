@@ -40,7 +40,10 @@ FILES_FILES					=	args_parse.c	\
 								set_src_map.c\
 								test_line_for_map.c
 COMMON_FILES				=	quit_app.c 
-GAME_FILES					=	start_cub_3d.c 
+GAME_FILES					=	draw.c \
+								quit_game.c \
+								run.c \
+								start_cub_3d.c
 
 
 SRC_FILES += $(addprefix $(COLORS_PATH), $(COLORS_FILES))

@@ -57,7 +57,8 @@
 # define AUTHORIZED_ON_MAP_EXIT			'E'
 # define AUTHORIZED_ON_MAP_PATROL		'R'
 
-
+# define TILE_SIZE 16
+# define COLOR_WATER 0x000000FF
 
 
 # define REQUIRED_QT			3
@@ -65,7 +66,7 @@
 # define MAX_DEGREES			360
 # define FOV					90
 # define ROTATE_DIV				50000
-# define RUN_STEP				0.00005F
+# define RUN_STEP				1
 # define WALL_HIT_BOX			0.3
 # define QUOTIENT_MOVE			1
 
@@ -85,25 +86,9 @@ typedef struct  s_data {
 
 typedef struct			s_coordinates
 {
-	float				x;//i
-	float				y;//j
+	int				x;//i horizontale
+	int				y;//j vertical
 }						t_coordinates;
-
-typedef struct			s_cartesian_vector
-{
-	t_coordinates		dir;
-}						t_cartesian_vector;
-
-typedef struct			s_polar_vector
-{
-	float				angle;
-	float				size;
-}						t_polar_vector;
-
-typedef struct			s_start
-{
-	t_coordinates		pos;
-}						t_start;
 
 typedef struct			s_map_array
 {
@@ -128,16 +113,6 @@ typedef struct			s_map_array
 #define GO_FRONT_W_ID					6  /* U+0077 LATIN SMALL LETTER W */
 #define ACTUALLY_RUN					7
 
-typedef struct			s_actions
-{
-	int					is_asked;
-	int					keycode;
-	int					(*fun)(void *);
-}						t_action;
-
-# define MAX_SRCS		5
-# define MAX_COLORS		2
-# define MAX_ACTIONS	8
 # define MAX_IMGS		7
 # define MAX_TEX		4
 
@@ -148,15 +123,13 @@ typedef struct		s_env
 	t_map_array		map_array;
 	t_coordinates	try_to_run_dir;
 	t_coordinates	current_pos;
+	t_coordinates	win_max_dimensions;
     void			*mlx;
     void			*win;
-	t_action		actions[MAX_ACTIONS];
 	t_data			imgs[MAX_IMGS];
 	t_data			textures[MAX_TEX];
-	float			fov_angle;
-	t_coordinates	direction;
-	t_coordinates	plane;
 	int				count;
+	int				quitting;
 }					t_env;
 
 typedef struct			s_parsing
@@ -202,7 +175,7 @@ int		id_pos(int i, int j, int index_parser, t_env *env);
 int		id_required(int i, int j, int index_parser, t_env *env);
 
 static const t_map_parsing g_map_parsings[MAX_MAP_PARSING] = {
-	(t_map_parsing){AUTHORIZED_ON_MAP_POSITION, &id_required, true, '0'},
+	(t_map_parsing){AUTHORIZED_ON_MAP_POSITION, &id_pos, true, '0'},
 	(t_map_parsing){AUTHORIZED_ON_MAP_COLLECTIBLE, &id_required, false, false},
 	(t_map_parsing){AUTHORIZED_ON_MAP_EXIT, &id_required, true, false},
 	(t_map_parsing){AUTHORIZED_ON_MAP_WALL, NULL, false, false},
@@ -243,5 +216,31 @@ void	quit_app(t_env *env, const char *message, int code);
 */
 
 void	start_cub_3d(t_env *env);
+void	draw_asset(t_env *env, int id_asset, t_data *datas, t_coordinates start);
+void	draw_rect(t_data *datas, t_coordinates start, t_coordinates end, int color);
+void	draw_water(t_data *datas, t_env *env);
+void	draw_walls(t_data *datas, t_env *env);
+void	print_img(t_env *env);
+
+typedef struct			s_actions
+{
+	int					keycode;
+	int					(*fun)(t_env *);
+}						t_action;
+
+int	run_up(t_env *env);
+int	run_down(t_env *env);
+int	run_right(t_env *env);
+int	run_left(t_env *env);
+int	quit_game(t_env *env);
+
+# define MAX_ACTIONS	5
+static const t_action		g_actions[MAX_ACTIONS] = {
+	(t_action){XK_Escape, &quit_game},
+	(t_action){XK_a, &run_left},
+	(t_action){XK_d, &run_right},
+	(t_action){XK_s, &run_down},
+	(t_action){XK_w, &run_up},
+};
 
 #endif
