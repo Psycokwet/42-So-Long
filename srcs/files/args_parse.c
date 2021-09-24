@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/20 22:33:09 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/24 16:18:31 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,14 @@ void	args_parse(t_env *env, int argc, char const *argv[])
 	}
 	if (argc < 2)
 	{
-		printf("Error, there is not enough arguments.\n%s\n", USAGE);
+		printf("Error\nThere is not enough arguments.\n%s\n", USAGE);
 		exit(EXIT_ARGS_FAILURE);
 	}
 	set_src_map(env, argv);
 	if (parse_map(env) < RETURN_SUCCES)
-		quit_app(env, "Error, while reading the file. There may be an error in the content of the map", -EXIT_ARGS_FAILURE);
+		quit_app(env, "While reading the file. There may be an error in the content of the map", -EXIT_ARGS_FAILURE);
 	if (check_map_for_holes(env) < EXIT_SUCCESS)
-		quit_app(env, "Error, the map contains holes", -EXIT_FAILURE);
+		quit_app(env, "The map contains holes", -EXIT_FAILURE);
 	if (check_min_requirements(env) < EXIT_SUCCESS)
 		quit_app(env, "Lacking required minimum elements on map", -EXIT_FAILURE);
 }

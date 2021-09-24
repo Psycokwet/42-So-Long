@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/24 15:08:32 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/24 15:42:03 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 
 int	main(int argc, char const *argv[]){
     t_env env;
-    int i = 0;
-    while (i < MAX_MAP_PARSING){
-        printf("id : %c\n", g_map_parsings[i].authorized_chars);
-        i++;
-    }
-
 	ft_bzero(&env, sizeof(t_env));
 	args_parse(&env, argc, argv);
 	start_cub_3d(&env);

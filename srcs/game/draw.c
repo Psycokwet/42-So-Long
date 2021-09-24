@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/24 14:40:20 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/24 15:53:25 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	draw_main(t_env *env, t_data *datas)
 
 #ifndef BONUS
 
-void	printf_action_count(t_env *env)
+void	print_action_count(t_env *env)
 {
 	if (env->last_count_printed == env->count)
 		return ;
@@ -143,9 +143,14 @@ void	printf_action_count(t_env *env)
 
 # else
 
-void	printf_action_count(t_env *env)
+void	print_action_count(t_env *env)
 {
-	ft_putstr_fd("PWETT\n", 1);
+	if (env->last_count_printed == env->count)
+		return ;
+	ft_putstr_fd("\r", 1);
+	ft_putnbr_fd(env->count, 1);
+	ft_putstr_fd("BONUS", 1);
+	env->last_count_printed = env->count;
 }
 
 # endif
@@ -163,7 +168,8 @@ void	print_img(t_env *env)
 	draw_water(env, &env->imgs[i]);
 	draw_objects(env, &env->imgs[i]);
 	draw_main(env, &env->imgs[i]);
-	printf_action_count(env);
+	print_action_count(env);
+	printf("dra\n");
 
     mlx_put_image_to_window(env->mlx, env->win, env->imgs[i].img, 0, 0);
 }

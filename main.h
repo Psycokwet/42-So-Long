@@ -45,8 +45,7 @@
 
 # define MAP_ARG				"MAP.ber"
 # define MAP_EXT				".ber"
-# define SAVE_ARG				"--save"
-# define USAGE					"Usage : MAP.ber [--save]"
+# define USAGE					"Usage : MAP.ber"
 # ifdef BONUS
 # define INSIDE_MAX_TYPE		5
 # define INSIDE					"0CEPR"

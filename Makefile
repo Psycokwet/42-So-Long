@@ -72,6 +72,7 @@ OS			= $(shell uname)
 
 ifdef WITH_BONUS
 	CFLAGS	+= -DBONUS
+	NAME				=	so_long_bonus
 endif
 
 all					:	 $(OBJ_PATHS_INIT) $(MAKE_LIBFT) $(NAME)
@@ -94,8 +95,6 @@ $(NAME)			: 	$(OBJ)  $(addprefix $(LIBSPATH), $(addprefix $(LIBFTPATH),$(LIBFT_A
 
 # $(BONUS)		: all
 
-$(BONUS)	:
-	$(MAKE) WITH_BONUS=1 all
 		
 clean_local		:									## delete all .o
 	$(RM) $(OBJ) $(OBJBONUS)
