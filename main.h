@@ -158,6 +158,7 @@ typedef struct		s_env
     void			*win;
 	t_data			imgs[MAX_IMGS];
 	t_data			textures[MAX_TEX];
+	int				last_count_printed;
 	int				count;
 	int				quitting;
 	t_block_properties blocks_properties[MAX_BLOCKS_PROPERTIES];

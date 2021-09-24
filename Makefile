@@ -69,8 +69,9 @@ LDFLAGS		=	-L$(addprefix $(LIBSPATH), $(LIBFTPATH)) -lft -L$(addprefix $(LIBSPAT
 RM			= 	rm -f
 
 OS			= $(shell uname)
-ifeq ($(OS), Linux)
-	CFLAGS	+= -DLINUX
+
+ifdef WITH_BONUS
+	CFLAGS	+= -DBONUS
 endif
 
 all					:	 $(OBJ_PATHS_INIT) $(MAKE_LIBFT) $(NAME)
@@ -91,7 +92,10 @@ $(OBJ_PATHS_INIT)	:
 $(NAME)			: 	$(OBJ)  $(addprefix $(LIBSPATH), $(addprefix $(LIBFTPATH),$(LIBFT_AR)))
 	$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)  $(INC) 
 
-$(BONUS)		: all
+# $(BONUS)		: all
+
+$(BONUS)	:
+	$(MAKE) WITH_BONUS=1 all
 		
 clean_local		:									## delete all .o
 	$(RM) $(OBJ) $(OBJBONUS)
