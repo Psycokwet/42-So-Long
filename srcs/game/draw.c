@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/24 13:08:07 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/24 13:59:12 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,26 +55,31 @@ int find_asset_index_for(t_env *env, char id)
 	return (-EXIT_FAILURE);
 }
 
-void	draw_asset(t_env *env, t_data *datas, int id_asset, t_coordinates start)
+void	draw_asset(t_env *env, t_data *datas_target,  t_data *datas_src, t_coordinates start)
 {
 	t_coordinates current;
 	u_int32_t color;
 
 	current = (t_coordinates){0, 0};
-	if (id_asset < 0)
-		return ;
 	while(current.y < TILE_SIZE)
 	{
 		while(current.x < TILE_SIZE)
 		{
-			color = get_pixel_color(&env->blocks_properties[id_asset].tex, (t_coordinates){current.x, current.y});
+			color = get_pixel_color(datas_src, (t_coordinates){current.x, current.y});
 			if (color != MASK_T)
-				my_mlx_pixel_put(datas, current.x + start.x, current.y + start.y, color);
+				my_mlx_pixel_put(datas_target, current.x + start.x, current.y + start.y, color);
 			current.x ++;
 		}
 		current.x = 0;
 		current.y++;
 	}
+}
+
+void	draw_block(t_env *env, t_data *datas, int id_asset, t_coordinates start)
+{
+	if (id_asset < 0)
+		return ;
+	draw_asset(env, datas, &env->blocks_properties[id_asset].tex, start);
 }
 
 void	draw_rect(t_data *datas, t_coordinates start, t_coordinates end, int color)
@@ -112,12 +117,17 @@ void	draw_objects(t_env *env, t_data *datas)
 		while (current.x < env->map_array.width)
 		{
 			if (env->map_array.lines[current.y][current.x] != AUTHORIZED_ON_MAP_TILE)
-				draw_asset(env, datas, find_asset_index_for(env, env->map_array.lines[current.y][current.x]), (t_coordinates){current.x * TILE_SIZE, current.y * TILE_SIZE});
+				draw_block(env, datas, find_asset_index_for(env, env->map_array.lines[current.y][current.x]), (t_coordinates){current.x * TILE_SIZE, current.y * TILE_SIZE});
 			current.x++;
 		}
 		current.y++;
 		current.x = 0;
 	}
+}
+
+void	draw_main(t_env *env, t_data *datas)
+{
+	draw_asset(env, datas, &env->main.tex, (t_coordinates){env->current_pos.x * TILE_SIZE, env->current_pos.y * TILE_SIZE});
 }
 
 void	print_img(t_env *env)
@@ -133,8 +143,8 @@ void	print_img(t_env *env)
 
 	draw_water(env, &env->imgs[i]);
 	draw_objects(env, &env->imgs[i]);
+	draw_main(env, &env->imgs[i]);
 
     mlx_put_image_to_window(env->mlx, env->win, env->imgs[i].img, 0, 0);
-
 }
 
