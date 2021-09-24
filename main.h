@@ -248,10 +248,9 @@ void	quit_app(t_env *env, const char *message, int code);
 */
 
 void	start_cub_3d(t_env *env);
-void	draw_asset(t_env *env, int id_asset, t_data *datas, t_coordinates start);
+void	draw_asset(t_env *env, t_data *datas, int id_asset, t_coordinates start);
 void	draw_rect(t_data *datas, t_coordinates start, t_coordinates end, int color);
-void	draw_water(t_data *datas, t_env *env);
-void	draw_walls(t_data *datas, t_env *env);
+void	draw_water(t_env *env, t_data *datas);
 void	print_img(t_env *env);
 
 typedef struct			s_actions
