@@ -119,7 +119,7 @@ typedef struct			s_map_array
 
 # define EXIT_SRC			"./assets/exit.xpm"
 # define WALL_SRC			"./assets/walls.xpm"
-# define COLLECTIBLE_SRC	"./assets/collectibles.xpm"
+# define COLLECTIBLE_SRC	"./assets/collectible.xpm"
 # define MAIN_SRC			"./assets/main.xpm"
 # define PATROL_SRC			"./assets/patrol.xpm"
 

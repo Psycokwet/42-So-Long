@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/24 11:29:02 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/24 13:08:07 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,7 @@
 #define PIXEL_SIZE 4
 int get_pixel_color(t_data *datas, t_coordinates coos)
 {
-// 	printf("stats %d, %d, %d, %d\n", datas->bits_per_pixel, datas->endian, datas->line_length/4, 
-// (int*)	(datas->addr + (coos.y * datas->line_length + coos.x * (datas->bits_per_pixel / 8))));//(coos.y * datas->line_length)  + (coos.x * PIXEL_SIZE)]);
-
-		printf("get_pixel_color %p %d, %d, %d\n",datas->addr, datas->bits_per_pixel, datas->endian, datas->line_length);
-	return (datas->addr + (coos.y * datas->line_length + coos.x * (datas->bits_per_pixel/8 )));
-	// return MASK_R;
+	return (*(int*)	(datas->addr + (coos.y * datas->line_length + coos.x * (datas->bits_per_pixel / 8))));
 }
 
 int find_asset_index_for(t_env *env, char id)
@@ -52,8 +47,9 @@ int find_asset_index_for(t_env *env, char id)
 	i = 0;
 	while (i < MAX_BLOCKS_PROPERTIES)
 	{
-		if (env->blocks_properties[i].id == id)
-			return i;
+		if (env->blocks_properties[i].id == id){
+			// printf("ID ASSET %d\n", i);
+			return i;}
 		i++;
 	}
 	return (-EXIT_FAILURE);
@@ -62,17 +58,18 @@ int find_asset_index_for(t_env *env, char id)
 void	draw_asset(t_env *env, t_data *datas, int id_asset, t_coordinates start)
 {
 	t_coordinates current;
+	u_int32_t color;
 
 	current = (t_coordinates){0, 0};
 	if (id_asset < 0)
 		return ;
-	// printf("ASSET ID : %d for \n", id_asset);
-	printf("ASSET ID : %d for %c \n", id_asset, env->blocks_properties[id_asset].id);
-	while(current.y <= TILE_SIZE)
+	while(current.y < TILE_SIZE)
 	{
-		while(current.x <= TILE_SIZE)
+		while(current.x < TILE_SIZE)
 		{
-			my_mlx_pixel_put(datas, current.x + start.x, current.y + start.y, get_pixel_color(&env->blocks_properties[id_asset].tex, (t_coordinates){current.x, current.y}));
+			color = get_pixel_color(&env->blocks_properties[id_asset].tex, (t_coordinates){current.x, current.y});
+			if (color != MASK_T)
+				my_mlx_pixel_put(datas, current.x + start.x, current.y + start.y, color);
 			current.x ++;
 		}
 		current.x = 0;

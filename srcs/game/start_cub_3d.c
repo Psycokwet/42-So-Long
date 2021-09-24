@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/24 11:17:09 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/24 13:06:21 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,8 +304,9 @@ int	correct_max_dimension(t_env *env)
 
 int	init_texture(t_env *env, char* src, t_data* tex)
 {
+	printf("INIT %s\n", src);
 	tex->img = mlx_xpm_file_to_image(env->mlx,
-	env->blocks_properties->src, &tex->w, &tex->h);
+	src, &tex->w, &tex->h);
 	if (!tex->img)
 		return (-EXIT_FAILURE);
 	tex->addr = mlx_get_data_addr(tex->img,
@@ -313,7 +314,7 @@ int	init_texture(t_env *env, char* src, t_data* tex)
 	&tex->endian);
 	if(!tex->addr){printf("GAIL HERE [%s]\n", src);
 		return (-EXIT_FAILURE);}
-		printf("stats %p %d, %d, %d\n",tex->addr, tex->bits_per_pixel, tex->endian, tex->line_length);
+	printf("stats %u %u\n",get_pixel_color(tex, (t_coordinates){}), MASK_T);
 	return (EXIT_SUCCESS);
 }
 
@@ -321,10 +322,13 @@ int	init_textures(t_env *env)
 {
 	int i;
 
-	i = -1;
-	while (i++ < MAX_BLOCKS_PROPERTIES)
+	i = 0;
+	while (i < MAX_BLOCKS_PROPERTIES)
+	{
 		if (init_texture(env, env->blocks_properties[i].src, &env->blocks_properties[i].tex) < EXIT_SUCCESS)
 			return (-EXIT_FAILURE);
+		i++;
+	}
 	if (init_texture(env, env->main.src, &env->main.tex) < EXIT_SUCCESS)
 		return (-EXIT_FAILURE);
 	return (EXIT_SUCCESS);
