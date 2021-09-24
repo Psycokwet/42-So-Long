@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/24 13:06:21 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/24 14:00:42 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,7 +304,6 @@ int	correct_max_dimension(t_env *env)
 
 int	init_texture(t_env *env, char* src, t_data* tex)
 {
-	printf("INIT %s\n", src);
 	tex->img = mlx_xpm_file_to_image(env->mlx,
 	src, &tex->w, &tex->h);
 	if (!tex->img)
@@ -312,9 +311,8 @@ int	init_texture(t_env *env, char* src, t_data* tex)
 	tex->addr = mlx_get_data_addr(tex->img,
 	&tex->bits_per_pixel, &tex->line_length,
 	&tex->endian);
-	if(!tex->addr){printf("GAIL HERE [%s]\n", src);
-		return (-EXIT_FAILURE);}
-	printf("stats %u %u\n",get_pixel_color(tex, (t_coordinates){}), MASK_T);
+	if(!tex->addr)
+		return (-EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
