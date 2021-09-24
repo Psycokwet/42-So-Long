@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/24 14:59:36 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/24 16:26:37 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -337,11 +337,11 @@ int	init_blocks_properties(t_env *env)
 	int i;
 
 	i = 0;
-	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_EXIT, EXIT_SRC, NULL, NULL, (t_data){}};
-	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_WALL, WALL_SRC, NULL, NULL, (t_data){}};
-	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_COLLECTIBLE, COLLECTIBLE_SRC, NULL, NULL, (t_data){}};
+	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_EXIT, EXIT_SRC, NULL, (t_data){}};
+	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_WALL, WALL_SRC, NULL, (t_data){}};
+	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_COLLECTIBLE, COLLECTIBLE_SRC, NULL, (t_data){}};
 	#ifdef BONUS
-	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_PATROL, PATROL_SRC, NULL, NULL, (t_data){}};
+	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_PATROL, PATROL_SRC, NULL, (t_data){}};
 	# endif
 	env->main = (t_main_character){MAIN_SRC, NULL, 0, (t_data){}};
 	return (init_textures(env));

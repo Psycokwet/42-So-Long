@@ -135,7 +135,6 @@ typedef struct			s_block_properties
 {
 	char				id;
 	char				*src;
-	int					(*draw)(void *, t_coordinates start, int index_id_block);
 	int					(*effect)(void *, t_coordinates block);
 	t_data				tex;
 	//data of the texture

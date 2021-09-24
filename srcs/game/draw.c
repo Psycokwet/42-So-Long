@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/24 15:53:25 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/24 16:21:27 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,6 @@ void	print_img(t_env *env)
 	draw_objects(env, &env->imgs[i]);
 	draw_main(env, &env->imgs[i]);
 	print_action_count(env);
-	printf("dra\n");
 
     mlx_put_image_to_window(env->mlx, env->win, env->imgs[i].img, 0, 0);
 }
