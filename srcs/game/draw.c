@@ -6,18 +6,43 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/24 09:08:49 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/24 11:29:02 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../main.h"
 
+
+// void			my_mlx_pixel_put(t_data *data, int x, int y, int color)
+// {
+// 	char	*dst;
+
+// 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+// 	*(unsigned int *)dst = color;
+// }
+
+// int		get_tex_color(t_env *env)
+// {
+// 	int color;
+
+// 	color = 0;
+// 	if (env->rndr->texposx >= 0 && env->rndr->texposx < env->rndr->tex->h
+// 	&& env->rndr->texx >= 0 && env->rndr->texx < env->rndr->tex->w)
+// 		color = *(int*)(env->rndr->tex->addr
+// 		+ (4 * env->rndr->tex->w * (int)env->rndr->texy)
+// 		+ (4 * (int)env->rndr->texx));
+// 	return (color);
+// }
+
 #define PIXEL_SIZE 4
-u_int32_t get_pixel_color(t_data *datas, t_coordinates coos)
+int get_pixel_color(t_data *datas, t_coordinates coos)
 {
-	printf("stats %d, %d\n", datas->bits_per_pixel, datas->endian, datas->line_length);
-	// return (datas->addr[datas.])
-	return MASK_R;
+// 	printf("stats %d, %d, %d, %d\n", datas->bits_per_pixel, datas->endian, datas->line_length/4, 
+// (int*)	(datas->addr + (coos.y * datas->line_length + coos.x * (datas->bits_per_pixel / 8))));//(coos.y * datas->line_length)  + (coos.x * PIXEL_SIZE)]);
+
+		printf("get_pixel_color %p %d, %d, %d\n",datas->addr, datas->bits_per_pixel, datas->endian, datas->line_length);
+	return (datas->addr + (coos.y * datas->line_length + coos.x * (datas->bits_per_pixel/8 )));
+	// return MASK_R;
 }
 
 int find_asset_index_for(t_env *env, char id)
@@ -27,7 +52,7 @@ int find_asset_index_for(t_env *env, char id)
 	i = 0;
 	while (i < MAX_BLOCKS_PROPERTIES)
 	{
-		if (env->blocks_properties->id == id)
+		if (env->blocks_properties[i].id == id)
 			return i;
 		i++;
 	}
@@ -39,11 +64,15 @@ void	draw_asset(t_env *env, t_data *datas, int id_asset, t_coordinates start)
 	t_coordinates current;
 
 	current = (t_coordinates){0, 0};
+	if (id_asset < 0)
+		return ;
+	// printf("ASSET ID : %d for \n", id_asset);
+	printf("ASSET ID : %d for %c \n", id_asset, env->blocks_properties[id_asset].id);
 	while(current.y <= TILE_SIZE)
 	{
 		while(current.x <= TILE_SIZE)
 		{
-			my_mlx_pixel_put(datas, current.x + start.x, current.y + start.y, MASK_R);//get_pixel_color(datas, (t_coordinates){current.x + start.x, current.y + start.y}));
+			my_mlx_pixel_put(datas, current.x + start.x, current.y + start.y, get_pixel_color(&env->blocks_properties[id_asset].tex, (t_coordinates){current.x, current.y}));
 			current.x ++;
 		}
 		current.x = 0;
@@ -86,7 +115,7 @@ void	draw_objects(t_env *env, t_data *datas)
 		while (current.x < env->map_array.width)
 		{
 			if (env->map_array.lines[current.y][current.x] != AUTHORIZED_ON_MAP_TILE)
-				draw_asset(env, datas, 0, (t_coordinates){current.x * TILE_SIZE, current.y * TILE_SIZE});
+				draw_asset(env, datas, find_asset_index_for(env, env->map_array.lines[current.y][current.x]), (t_coordinates){current.x * TILE_SIZE, current.y * TILE_SIZE});
 			current.x++;
 		}
 		current.y++;

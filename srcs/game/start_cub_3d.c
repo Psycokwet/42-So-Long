@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/23 16:54:32 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/24 11:17:09 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -306,13 +306,14 @@ int	init_texture(t_env *env, char* src, t_data* tex)
 {
 	tex->img = mlx_xpm_file_to_image(env->mlx,
 	env->blocks_properties->src, &tex->w, &tex->h);
-	if (!tex->img){printf("GAIL HERE [%s]\n", src);
-		return (-EXIT_FAILURE);}
+	if (!tex->img)
+		return (-EXIT_FAILURE);
 	tex->addr = mlx_get_data_addr(tex->img,
 	&tex->bits_per_pixel, &tex->line_length,
 	&tex->endian);
-	if(!tex->img)
-		return (-EXIT_FAILURE);
+	if(!tex->addr){printf("GAIL HERE [%s]\n", src);
+		return (-EXIT_FAILURE);}
+		printf("stats %p %d, %d, %d\n",tex->addr, tex->bits_per_pixel, tex->endian, tex->line_length);
 	return (EXIT_SUCCESS);
 }
 
