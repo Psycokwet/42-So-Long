@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/24 14:00:42 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/24 14:20:04 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,7 @@ int             key_press(int keycode, t_env *env)
 	int i;
 
 	i = -1;
-	while (i++ < MAX_ACTIONS - 1)
+	while (i++ < MAX_ACTIONS)
 		if (keycode == g_actions[i].keycode)
 		{
 			g_actions[i].fun(env);
