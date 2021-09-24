@@ -47,15 +47,22 @@
 # define MAP_EXT				".ber"
 # define SAVE_ARG				"--save"
 # define USAGE					"Usage : MAP.ber [--save]"
+# ifdef BONUS
+# define INSIDE_MAX_TYPE		5
+# define INSIDE					"0CEPR"
+#else
 # define INSIDE_MAX_TYPE		4
 # define INSIDE					"0CEP"
+# endif
 # define WALL					"1"
 # define AUTHORIZED_ON_MAP_WALL			'1'
 # define AUTHORIZED_ON_MAP_TILE			'0'
 # define AUTHORIZED_ON_MAP_POSITION		'P'
 # define AUTHORIZED_ON_MAP_COLLECTIBLE	'C'
 # define AUTHORIZED_ON_MAP_EXIT			'E'
+# ifdef BONUS
 # define AUTHORIZED_ON_MAP_PATROL		'R'
+# endif
 
 # define TILE_SIZE 16
 # define COLOR_WATER 0x000000FF
@@ -121,7 +128,9 @@ typedef struct			s_map_array
 # define WALL_SRC			"./assets/walls.xpm"
 # define COLLECTIBLE_SRC	"./assets/collectible.xpm"
 # define MAIN_SRC			"./assets/main.xpm"
+# ifdef BONUS
 # define PATROL_SRC			"./assets/patrol.xpm"
+# endif
 
 typedef struct			s_block_properties
 {
@@ -143,9 +152,13 @@ typedef struct			s_main_character
 	//data of the texture
 }						t_main_character;
 
+#ifdef BONUS
+# define MAX_BLOCKS_PROPERTIES 4
+# else
+# define MAX_BLOCKS_PROPERTIES 3
+# endif
 
-
-#define MAX_BLOCKS_PROPERTIES 4
+// #define MAX_BLOCKS_PROPERTIES 4
 typedef struct		s_env
 {
 	int				required[REQUIRED_QT];
@@ -202,7 +215,11 @@ typedef struct			s_map_parsing
 	int					replace;
 }						t_map_parsing;
 
-#define MAX_MAP_PARSING 6
+# ifdef BONUS
+# define MAX_MAP_PARSING 6
+# else
+# define MAX_MAP_PARSING 5
+# endif
 
 int		id_pos(int i, int j, int index_parser, t_env *env);
 int		id_required(int i, int j, int index_parser, t_env *env);
@@ -213,7 +230,9 @@ static const t_map_parsing g_map_parsings[MAX_MAP_PARSING] = {
 	(t_map_parsing){AUTHORIZED_ON_MAP_EXIT, &id_required, true, false},
 	(t_map_parsing){AUTHORIZED_ON_MAP_WALL, NULL, false, false},
 	(t_map_parsing){AUTHORIZED_ON_MAP_TILE, NULL, false, false},
+# ifdef BONUS
 	(t_map_parsing){AUTHORIZED_ON_MAP_PATROL, NULL, false, false},
+# endif
 };
 
 typedef struct			s_map_rec_datas
