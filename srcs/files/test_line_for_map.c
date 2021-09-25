@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/23 13:09:27 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/25 10:17:48 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 
 int		id_pos(int i_width, int i_height, int index_parser, t_env *env)
 {
-	id_required(i_width, i_height, index_parser, env);
 	env->current_pos = (t_coordinates){i_width, i_height};
-	return (EXIT_SUCCESS);
+	return (id_required(i_width, i_height, index_parser, env));
 }
 
 int		id_required(int i_width, int i_height, int index_parser, t_env *env)
@@ -31,6 +30,12 @@ int		id_required(int i_width, int i_height, int index_parser, t_env *env)
 	if(g_map_parsings[index_parser].single == false)
 		return (EXIT_SUCCESS);
 	return (-EXIT_FAILURE);
+}
+
+int		id_collectible(int i_width, int i_height, int index_parser, t_env *env)
+{
+	env->collectibles++;
+	return (id_required(i_width, i_height, index_parser, env));
 }
 
 int	test_line_for_map_int(char *line, t_env *env, int i_height, int i_width)

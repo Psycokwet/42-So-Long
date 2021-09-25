@@ -156,7 +156,18 @@ typedef struct			s_main_character
 # define MAX_BLOCKS_PROPERTIES 3
 # endif
 
+# define ACTION_END_GAME_FORCE_QUIT	0
+# define ACTION_END_GAME_DEAD		1
+# define ACTION_END_GAME_EXIT		2
+# define MAX_ACTION_END_GAME		3
 // #define MAX_BLOCKS_PROPERTIES 4
+
+typedef struct			s_end_game
+{
+	int 				value;
+	void					(*fun)(void*);
+}						t_end_game;
+
 typedef struct		s_env
 {
 	int				required[REQUIRED_QT];
@@ -170,9 +181,10 @@ typedef struct		s_env
 	t_data			imgs[MAX_IMGS];
 	int				last_count_printed;
 	int				count;
-	int				quitting;
+	int				collectibles;
 	t_block_properties blocks_properties[MAX_BLOCKS_PROPERTIES];
 	t_main_character main;
+	t_end_game		end_game[MAX_ACTION_END_GAME];
 }					t_env;
 
 typedef struct			s_parsing
@@ -220,10 +232,11 @@ typedef struct			s_map_parsing
 
 int		id_pos(int i, int j, int index_parser, t_env *env);
 int		id_required(int i, int j, int index_parser, t_env *env);
+int		id_collectible(int i, int j, int index_parser, t_env *env);
 
 static const t_map_parsing g_map_parsings[MAX_MAP_PARSING] = {
 	(t_map_parsing){AUTHORIZED_ON_MAP_POSITION, &id_pos, true, '0'},
-	(t_map_parsing){AUTHORIZED_ON_MAP_COLLECTIBLE, &id_required, false, false},
+	(t_map_parsing){AUTHORIZED_ON_MAP_COLLECTIBLE, &id_collectible, false, false},
 	(t_map_parsing){AUTHORIZED_ON_MAP_EXIT, &id_required, true, false},
 	(t_map_parsing){AUTHORIZED_ON_MAP_WALL, NULL, false, false},
 	(t_map_parsing){AUTHORIZED_ON_MAP_TILE, NULL, false, false},

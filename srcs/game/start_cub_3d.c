@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/25 08:55:15 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/25 11:06:44 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,17 +212,17 @@ int             key_press(int keycode, t_env *env)
 			break ;
 		}
 	return keycode;
-	return 0;
 }
 
 int		close_window(t_env *env)
 {
-	env->quitting = true;
+	env->end_game[ACTION_END_GAME_FORCE_QUIT].value = true;
 	return (0);
 }
 
 int		game_loop(t_env *env)
 {
+	int i;
 	if(env->win){
 		print_img(env);
 		// img.img = mlx_new_image(env->mlx, env->r.width, env->r.height);
@@ -242,8 +242,19 @@ int		game_loop(t_env *env)
 	// 		env->actions[i].fun(env);
 	// 	}
 	// }
-	if(env->quitting == true){printf("trying it quit\n");//, %p\n", g_actions[XK_Escape]);
-		g_actions[0].fun(env);}
+	i = 0;
+	while (i < MAX_ACTION_END_GAME)
+	{
+		if (env->end_game[i].value == true)
+		{
+			printf("\n");
+			if (env->end_game[i].fun)
+				env->end_game[i].fun(env);
+			g_actions[0].fun(env);
+			break ;
+		}
+		i++;
+	}
 	return (0);
 }
 
@@ -339,22 +350,49 @@ int	block_collectible_effect(void *v_env, t_coordinates coos)
 	t_env *env;
 	env = (t_env*)v_env;
 
+	env->collectibles--;
 	env->map_array.lines[coos.y][coos.x] = AUTHORIZED_ON_MAP_TILE;
 }
+
 int	block_patrol_effect(void *v_env, t_coordinates coos)
 {
 	t_env *env;
-	env = (t_env*)v_env;
 
-	env->map_array.lines[coos.y][coos.x] = AUTHORIZED_ON_MAP_TILE;
+	env = (t_env*)v_env;
+	env->end_game[ACTION_END_GAME_DEAD].value = true;
 }
 
 int	block_exit_effect(void *v_env, t_coordinates coos)
 {
 	t_env *env;
-	env = (t_env*)v_env;
 
-	env->map_array.lines[coos.y][coos.x] = AUTHORIZED_ON_MAP_TILE;
+	env = (t_env*)v_env;
+	env->end_game[ACTION_END_GAME_EXIT].value = true;
+}
+
+
+void	exit_R(void *v_env)
+{
+	printf("You lost...\n");
+}
+
+void	exit_X(void *v_env)
+{
+}
+
+void	exit_E(void *v_env)
+{
+	if (((t_env *)v_env)->collectibles == 0)
+		printf("You won !\n");
+	else
+		exit_R(v_env);
+}
+
+void	init_end_game(t_env *env)
+{
+	env->end_game[ACTION_END_GAME_EXIT] = (t_end_game){false, &exit_E};
+	env->end_game[ACTION_END_GAME_DEAD] = (t_end_game){false, &exit_R};
+	env->end_game[ACTION_END_GAME_FORCE_QUIT] = (t_end_game){false, &exit_X};
 }
 
 int	init_blocks_properties(t_env *env)
@@ -362,11 +400,11 @@ int	init_blocks_properties(t_env *env)
 	int i;
 
 	i = 0;
-	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_EXIT, EXIT_SRC, NULL, (t_data){}};
+	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_EXIT, EXIT_SRC, &block_exit_effect, (t_data){}};
 	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_WALL, WALL_SRC, NULL, (t_data){}};
 	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_COLLECTIBLE, COLLECTIBLE_SRC, &block_collectible_effect, (t_data){}};
 	#ifdef BONUS
-	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_PATROL, PATROL_SRC, NULL, (t_data){}};
+	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_PATROL, PATROL_SRC, &block_patrol_effect, (t_data){}};
 	# endif
 	env->main = (t_main_character){MAIN_SRC, NULL, 0, (t_data){}};
 	return (init_textures(env));
@@ -375,6 +413,7 @@ int	init_blocks_properties(t_env *env)
 void	start_cub_3d(t_env *env)
 {
 	init_imgs(env);
+	init_end_game(env);
 	env->count = 0;
     env->mlx = mlx_init();
 	if (correct_max_dimension(env) < EXIT_SUCCESS)
