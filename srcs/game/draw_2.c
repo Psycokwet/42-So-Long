@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/25 15:52:33 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/25 16:14:42 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,22 @@ void	draw_objects(t_env *env, t_data *datas)
 	}
 }
 
+void	increase_last_frame(t_env *env, t_coordinates *coos)
+{
+	env->frame_count++;
+	coos->x = (env->frame_count / 100) % 7 * TILE_SIZE;
+	coos->y = 0;
+}
+
 void	draw_main(t_env *env, t_data *datas)
 {
+	t_coordinates	start_src;
+
+	start_src = (t_coordinates){};
+	if (IF_BONUS)
+		increase_last_frame(env, &start_src);
 	draw_asset(datas, &env->main.tex, (t_coordinates){env->current_pos.x
-		* TILE_SIZE, env->current_pos.y * TILE_SIZE});
+		* TILE_SIZE, env->current_pos.y * TILE_SIZE}, start_src);
 }
 
 void	print_img(t_env *env)

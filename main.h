@@ -200,7 +200,8 @@ typedef struct s_env
 	void				*win;
 	t_data				imgs[MAX_IMGS];
 	int					last_count_printed;
-	int					count;
+	int					frame_count;
+	int					action_count;
 	int					collectibles;
 	t_block_properties	blocks_properties[MAX_BLOCKS_PROPERTIES];
 	t_main_character	main;
@@ -291,7 +292,7 @@ void		quit_app(t_env *env, const char *message, int code);
 
 void		start_so_long(t_env *env);
 void		draw_asset(t_data *datas_target, t_data *datas_src,
-				t_coordinates start);
+				t_coordinates start_target, t_coordinates start_src);
 void		draw_rect(t_data *datas, t_coordinates start, t_coordinates end,
 				int color);
 void		draw_water(t_env *env, t_data *datas);

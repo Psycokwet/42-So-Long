@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/25 14:09:50 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/25 16:06:02 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	actually_run(t_env *env)
 		[(int)new_pos.x], AUTHORIZED_ON_MAP_WALL, &env->current_pos.x,
 		&new_pos.x)) == true)
 	{
-		env->count++;
+		env->action_count++;
 		do_action(env);
 	}
 	env->try_to_run_dir = (t_coordinates){0, 0};

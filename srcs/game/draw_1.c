@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/25 15:02:15 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/25 16:14:02 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	find_asset_index_for(t_env *env, char id)
 }
 
 void	draw_asset(t_data *datas_target, t_data *datas_src,
-t_coordinates start)
+t_coordinates start_target, t_coordinates start_src)
 {
 	t_coordinates	current;
 	int32_t			color;
@@ -37,11 +37,11 @@ t_coordinates start)
 	{
 		while (current.x < TILE_SIZE)
 		{
-			color = my_mlx_pixel_get(datas_src, (t_coordinates){current.x,
-					current.y});
+			color = my_mlx_pixel_get(datas_src, (t_coordinates){start_src.x
+					+ current.x, start_src.y + current.y});
 			if (color != (int32_t)MASK_T)
-				my_mlx_pixel_put(datas_target, current.x + start.x, current.y
-					+ start.y, color);
+				my_mlx_pixel_put(datas_target, current.x + start_target.x,
+					current.y + start_target.y, color);
 			current.x ++;
 		}
 		current.x = 0;
@@ -54,7 +54,8 @@ t_coordinates start)
 {
 	if (id_asset < 0)
 		return ;
-	draw_asset(datas, &env->blocks_properties[id_asset].tex, start);
+	draw_asset(datas, &env->blocks_properties[id_asset].tex, start,
+		(t_coordinates){});
 }
 
 void	draw_rect(t_data *datas, t_coordinates start, t_coordinates end,
