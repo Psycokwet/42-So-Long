@@ -9,6 +9,7 @@ LIBMLX_AR			= 	libmlx.a
 
 SRC_PATH			= ./srcs/
 OBJ_PATH			= bin/
+OBJ_BONUS_PATH		= bin/bonus/
 LIBFT_PATH			= libft/
 LIBMLX_UNIX_PATH	= minilibx-linux/
 
@@ -17,6 +18,15 @@ IMG_PATH		= img/
 FILES_PATH		= files/
 COMMON_PATH		= common/
 GAME_PATH		= game/
+
+
+ifdef WITH_BONUS
+	CFLAGS	+= -DBONUS
+
+	OBJ_PATH	= $(OBJ_BONUS_PATH)
+	NAME	=	$(NAME_BONUS)
+endif
+
 
 OBJ_PATHS_INIT			=	$(addprefix $(OBJ_PATH),$(COLORS_PATH) 	\
 													$(IMG_PATH) 	\
@@ -54,7 +64,7 @@ SRC_FILES += $(addprefix $(COMMON_PATH), $(COMMON_FILES))
 SRC_FILES += $(addprefix $(GAME_PATH), $(GAME_FILES))
 
 
-OBJREGULAR_FILES	= 	$(SRC_FILES:.c=.o)			## get all .o names from .c names
+OBJREGULAR_FILES	= 	$(SRC_FILES:.c=.o)  ## get all .o names from .c names
 
 OBJ_FILES = $(OBJREGULAR_FILES)
 
@@ -70,11 +80,6 @@ LDFLAGS		=	-L$(addprefix $(LIBSPATH), $(LIBFTPATH)) -lft -L$(addprefix $(LIBSPAT
 RM			= 	rm -f
 
 OS			= $(shell uname)
-
-ifdef WITH_BONUS
-	CFLAGS	+= -DBONUS
-	NAME	=	$(NAME_BONUS)
-endif
 
 all					:	 $(OBJ_PATHS_INIT) $(MAKE_LIBFT) $(NAME)
 
@@ -99,10 +104,9 @@ $(BONUS)		:
 
 		
 clean_local		:									## delete all .o
-	$(RM) $(OBJ) $(OBJBONUS)
+	$(RM) -rf $(OBJ_PATH) $(OBJ_BONUS_PATH)
 
-clean			:									## delete all .o
-	$(RM) $(OBJ) $(OBJBONUS)
+clean			: clean_local							## delete all .o
 	$(MAKE) -C $(addprefix $(LIBSPATH), $(LIBFT_PATH)) clean	
 
 fclean			:	clean_local							## clean + delete executable
