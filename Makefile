@@ -1,5 +1,6 @@
 NAME				=	so_long
-BONUS				=	bonus	
+BONUS				=	bonus
+NAME_BONUS 			= so_long_bonus
 MAKE_LIBFT			=	makelibft
 LIBSPATH			=	libs/
 LIBFTPATH			=	libft/
@@ -72,7 +73,7 @@ OS			= $(shell uname)
 
 ifdef WITH_BONUS
 	CFLAGS	+= -DBONUS
-	NAME				=	so_long_bonus
+	NAME	=	$(NAME_BONUS)
 endif
 
 all					:	 $(OBJ_PATHS_INIT) $(MAKE_LIBFT) $(NAME)
@@ -93,7 +94,8 @@ $(OBJ_PATHS_INIT)	:
 $(NAME)			: 	$(OBJ)  $(addprefix $(LIBSPATH), $(addprefix $(LIBFTPATH),$(LIBFT_AR)))
 	$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)  $(INC) 
 
-# $(BONUS)		: all
+$(BONUS)		:
+	$(MAKE) WITH_BONUS=1 all
 
 		
 clean_local		:									## delete all .o
@@ -104,7 +106,7 @@ clean			:									## delete all .o
 	$(MAKE) -C $(addprefix $(LIBSPATH), $(LIBFT_PATH)) clean	
 
 fclean			:	clean_local							## clean + delete executable
-	$(RM) $(NAMETEST) $(NAME)
+	$(RM) $(NAMETEST) $(NAME) $(NAME_BONUS)
 	$(MAKE) -C $(addprefix $(LIBSPATH), $(LIBFT_PATH)) fclean					
 
 re				:	fclean all							## delete all .o and recompile all. Must use when editing a .h
