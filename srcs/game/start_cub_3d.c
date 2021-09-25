@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/24 16:26:37 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/25 07:48:32 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,6 +332,29 @@ int	init_textures(t_env *env)
 	return (EXIT_SUCCESS);
 }
 
+int	block_collectible_effect(void *v_env, t_coordinates coos)
+{
+	t_env *env;
+	env = (t_env*)v_env;
+
+	env->map_array.lines[coos.y][coos.x] = AUTHORIZED_ON_MAP_TILE;
+}
+int	block_patrol_effect(void *v_env, t_coordinates coos)
+{
+	t_env *env;
+	env = (t_env*)v_env;
+
+	env->map_array.lines[coos.y][coos.x] = AUTHORIZED_ON_MAP_TILE;
+}
+
+int	block_exit_effect(void *v_env, t_coordinates coos)
+{
+	t_env *env;
+	env = (t_env*)v_env;
+
+	env->map_array.lines[coos.y][coos.x] = AUTHORIZED_ON_MAP_TILE;
+}
+
 int	init_blocks_properties(t_env *env)
 {
 	int i;
@@ -339,7 +362,7 @@ int	init_blocks_properties(t_env *env)
 	i = 0;
 	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_EXIT, EXIT_SRC, NULL, (t_data){}};
 	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_WALL, WALL_SRC, NULL, (t_data){}};
-	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_COLLECTIBLE, COLLECTIBLE_SRC, NULL, (t_data){}};
+	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_COLLECTIBLE, COLLECTIBLE_SRC, &block_collectible_effect, (t_data){}};
 	#ifdef BONUS
 	env->blocks_properties[i++] = (t_block_properties){AUTHORIZED_ON_MAP_PATROL, PATROL_SRC, NULL, (t_data){}};
 	# endif
