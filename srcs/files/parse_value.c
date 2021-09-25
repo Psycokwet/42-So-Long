@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/19 18:32:28 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/25 11:58:08 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	parse_value(char const *arg)
 	checker = ft_itoa(tmp);
 	checker_length = ft_strlen(checker);
 	if (!(ft_strncmp(arg, checker,
-		checker_length) == 0 && ft_strlen(arg) == checker_length))
+				checker_length) == 0 && ft_strlen(arg) == checker_length))
 	{
 		free(checker);
 		return (-EXIT_FAILURE);

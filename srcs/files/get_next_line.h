@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 11:14:23 by scarboni          #+#    #+#             */
-/*   Updated: 2020/06/23 22:27:17 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/25 12:03:03 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-typedef struct	s_fd_read_wip
+typedef struct s_fd_read_wip
 {
 	int			fd;
 	ssize_t		last_ret_read;
@@ -43,9 +43,9 @@ size_t			ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t			ft_strlen(const char *s);
 int				cut_line_n(char **line, t_fd_read_wip *fd_wip);
 int				append_buffer(t_fd_read_wip *fd_wip, char *buffer,
-ssize_t ret_read);
+					ssize_t ret_read);
 int				read_full_line(t_fd_read_wip *fd_wip, char **line,
-				char *buffer);
+					char *buffer);
 void			set_current_wip(t_fd_read_wip *current_wip, int fd);
 int				get_next_line(int fd, char **line);
 

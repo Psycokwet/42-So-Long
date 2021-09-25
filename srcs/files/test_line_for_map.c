@@ -6,33 +6,34 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/25 10:17:48 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/25 11:57:43 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../main.h"
 #include "get_next_line.h"
 
-int		id_pos(int i_width, int i_height, int index_parser, t_env *env)
+int	id_pos(int i_width, int i_height, int index_parser, t_env *env)
 {
 	env->current_pos = (t_coordinates){i_width, i_height};
 	return (id_required(i_width, i_height, index_parser, env));
 }
 
-int		id_required(int i_width, int i_height, int index_parser, t_env *env)
+int	id_required(int i_width, int i_height, int index_parser, t_env *env)
 {
 	(void)i_width;
 	(void)i_height;
-	if (env->required[index_parser] == false){
+	if (env->required[index_parser] == false)
+	{
 		env->required[index_parser] = true;
 		return (EXIT_SUCCESS);
 	}
-	if(g_map_parsings[index_parser].single == false)
+	if (g_map_parsings[index_parser].single == false)
 		return (EXIT_SUCCESS);
 	return (-EXIT_FAILURE);
 }
 
-int		id_collectible(int i_width, int i_height, int index_parser, t_env *env)
+int	id_collectible(int i_width, int i_height, int index_parser, t_env *env)
 {
 	env->collectibles++;
 	return (id_required(i_width, i_height, index_parser, env));
@@ -51,8 +52,9 @@ int	test_line_for_map_int(char *line, t_env *env, int i_height, int i_width)
 		{
 			ret = true;
 			if (g_map_parsings[index_parser].parser)
-				if (g_map_parsings[index_parser].parser(i_width, i_height, index_parser, env)
-				< EXIT_SUCCESS)
+				if (g_map_parsings[index_parser].parser(i_width, i_height,
+						index_parser, env)
+					< EXIT_SUCCESS)
 					return (false);
 			if (g_map_parsings[index_parser].replace != false)
 				line[i_width] = g_map_parsings[index_parser].replace;
@@ -63,7 +65,7 @@ int	test_line_for_map_int(char *line, t_env *env, int i_height, int i_width)
 	return (ret);
 }
 
-int		test_line_for_map(char *line, int index_line, t_env *env)
+int	test_line_for_map(char *line, int index_line, t_env *env)
 {
 	int		i_width;
 	int		ret;

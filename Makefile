@@ -13,23 +13,24 @@ OBJ_BONUS_PATH		= bin/bonus/
 LIBFT_PATH			= libft/
 LIBMLX_UNIX_PATH	= minilibx-linux/
 
-COLORS_PATH 	= colors/
 IMG_PATH		= img/
 FILES_PATH		= files/
 COMMON_PATH		= common/
 GAME_PATH		= game/
 
+CFLAGS		+=	-W -Wall -Wextra -D BUFFER_SIZE=32 -g3 #-Werror  -pedantic 		## '+=' allow to keep default flags.
 
 ifdef WITH_BONUS
-	CFLAGS	+= -DBONUS
+	CFLAGS	+= -DBONUS -DIF_BONUS=true
 
 	OBJ_PATH	= $(OBJ_BONUS_PATH)
 	NAME	=	$(NAME_BONUS)
+else
+	CFLAGS	+= -DIF_BONUS=false
 endif
 
 
-OBJ_PATHS_INIT			=	$(addprefix $(OBJ_PATH),$(COLORS_PATH) 	\
-													$(IMG_PATH) 	\
+OBJ_PATHS_INIT			=	$(addprefix $(OBJ_PATH),$(IMG_PATH) 	\
 													$(COMMON_PATH) 	\
 													$(GAME_PATH) 	\
 													$(FILES_PATH))
@@ -37,10 +38,8 @@ OBJ_PATHS_INIT			+= 	$(OBJ_PATH)
 ## No need for a \ on the last line
 HEADERS_FILES				=	main.h
 SRC_FILES					=	main.c
-COLORS_FILES				=	get_opposite.c 	\
-								add_shade.c 	\
-								create_trgb.c
-IMG_FILES					=	my_mlx_pixel_put.c
+IMG_FILES					=	my_mlx_pixel_get.c \
+								my_mlx_pixel_put.c
 FILES_FILES					=	args_parse.c	\
 								free_array.c\
 								free_env.c\
@@ -51,13 +50,18 @@ FILES_FILES					=	args_parse.c	\
 								set_src_map.c\
 								test_line_for_map.c
 COMMON_FILES				=	quit_app.c 
-GAME_FILES					=	draw.c \
+GAME_FILES					=	action_end_game.c \
+								blocks.c \
+								draw_1.c \
+								draw_2.c \
+								inits_funs.c \
+								print_action_count.c \
 								quit_game.c \
+								run_int.c \
 								run.c \
-								start_cub_3d.c
+								start_so_long.c
 
 
-SRC_FILES += $(addprefix $(COLORS_PATH), $(COLORS_FILES))
 SRC_FILES += $(addprefix $(IMG_PATH), $(IMG_FILES))
 SRC_FILES += $(addprefix $(FILES_PATH), $(FILES_FILES))
 SRC_FILES += $(addprefix $(COMMON_PATH), $(COMMON_FILES))
@@ -72,8 +76,6 @@ SRC 		= $(addprefix $(SRC_PATH), $(SRC_FILES))
 OBJ 		= $(addprefix $(OBJ_PATH), $(OBJ_FILES))
 
 CC			=	clang
-
-CFLAGS		+=	-W -Wall -Wextra -D BUFFER_SIZE=32 -g3 #-Werror  -pedantic 		## '+=' allow to keep default flags.
 
 LDFLAGS		=	-L$(addprefix $(LIBSPATH), $(LIBFTPATH)) -lft -L$(addprefix $(LIBSPATH), $(LIBMLX_UNIX_PATH)) -lm -lbsd -lX11 -lXext $(addprefix $(addprefix $(LIBSPATH), $(LIBMLX_UNIX_PATH)), $(LIBMLX_AR))
 

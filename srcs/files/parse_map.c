@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/20 16:24:57 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/25 12:02:02 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ int	parse_map_int1(t_env *env, t_map_rec_datas *datas, int line_size)
 	if (datas->ret_gnl >= 0)
 	{
 		if (parse_map_int(env, (t_map_rec_datas)
-		{datas->fd, next_line, datas->i + 1, datas->ret_gnl})
-		< EXIT_SUCCESS)
+				{datas->fd, next_line, datas->i + 1, datas->ret_gnl})
+			< EXIT_SUCCESS)
 			return (simple_free_and_return(datas->line, -EXIT_FAILURE));
 		if (env->map_array.width == -1)
 			env->map_array.width = line_size;
-		if (env->map_array.width != line_size){
-			return (-EXIT_FAILURE);}
+		if (env->map_array.width != line_size)
+			return (-EXIT_FAILURE);
 		env->map_array.lines[datas->i] = datas->line;
 	}
 	return (EXIT_SUCCESS);
@@ -55,7 +55,7 @@ int	parse_map_int(t_env *env, t_map_rec_datas datas)
 		return (parse_map_int1(env, &datas, line_size));
 	else if (datas.ret_gnl == 0)
 	{
-		env->map_array.lines = (char**)malloc(sizeof(char*) * (datas.i));
+		env->map_array.lines = (char **)malloc(sizeof(char *) * (datas.i));
 		if (env->map_array.lines == NULL)
 			return (-EXIT_FAILURE);
 		free(datas.line);
@@ -66,11 +66,12 @@ int	parse_map_int(t_env *env, t_map_rec_datas datas)
 	return (EXIT_SUCCESS);
 }
 
-int		open_map(t_env *env)
+int	open_map(t_env *env)
 {
 	int		fd;
 
-	if ((fd = open(env->map_src, O_RDONLY)) < 0)
+	fd = open(env->map_src, O_RDONLY);
+	if (fd < 0)
 	{
 		printf("failed to open the map for reading\n");
 		exit(EXIT_ARGS_FAILURE);

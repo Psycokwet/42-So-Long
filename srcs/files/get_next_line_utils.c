@@ -6,23 +6,25 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:38:18 by scarboni          #+#    #+#             */
-/*   Updated: 2020/06/24 07:52:06 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/25 12:00:21 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int			ft_strchr_gnl(const char *s, int c, ssize_t *indice)
+int	ft_strchr_gnl(const char *s, int c, ssize_t *indice)
 {
 	ssize_t	i;
 
 	i = -1;
 	while (s[++i])
+	{
 		if ((unsigned char)s[i] == c)
 		{
 			*indice = i;
 			return (ENDL_FOUND);
 		}
+	}
 	if ((unsigned char)s[i] == c)
 	{
 		*indice = i;
@@ -31,7 +33,7 @@ int			ft_strchr_gnl(const char *s, int c, ssize_t *indice)
 	return (ENDL_NOT_FOUND);
 }
 
-char		*ft_strdup(const char *src)
+char	*ft_strdup(const char *src)
 {
 	char	*dst;
 	size_t	len;
@@ -43,7 +45,7 @@ char		*ft_strdup(const char *src)
 	return (dst);
 }
 
-size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
 	size_t		i;
 
@@ -51,7 +53,7 @@ size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize)
 		return (0);
 	if (!dst || dstsize <= 0)
 		return (ft_strlen(src));
-	i = (size_t)-1;
+	i = (size_t) - 1;
 	while (src[++i] && i < dstsize - 1)
 		dst[i] = src[i];
 	dst[i] = '\0';
@@ -60,9 +62,9 @@ size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	return (i);
 }
 
-size_t		ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (s[i])
@@ -70,7 +72,7 @@ size_t		ft_strlen(const char *s)
 	return (i);
 }
 
-int			cut_line_n(char **line, t_fd_read_wip *fd_wip)
+int	cut_line_n(char **line, t_fd_read_wip *fd_wip)
 {
 	ssize_t	n_indice;
 	char	*tmp;
@@ -86,5 +88,7 @@ int			cut_line_n(char **line, t_fd_read_wip *fd_wip)
 	free(fd_wip->line_wip);
 	fd_wip->line_wip = tmp;
 	fd_wip->size = fd_wip->size - (n_indice + 1);
-	return (fd_wip->last_ret_read == 0 ? EXIT_READ_CLOSED : EXIT_READ_OPEN);
+	if (fd_wip->last_ret_read == 0)
+		return (EXIT_READ_CLOSED);
+	return (EXIT_READ_OPEN);
 }
