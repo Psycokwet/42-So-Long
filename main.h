@@ -168,7 +168,6 @@ typedef struct		s_env
     void			*mlx;
     void			*win;
 	t_data			imgs[MAX_IMGS];
-	t_data			textures[MAX_TEX];
 	int				last_count_printed;
 	int				count;
 	int				quitting;

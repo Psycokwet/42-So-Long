@@ -6,13 +6,13 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/25 07:48:32 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/25 07:59:02 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../main.h"
 
-// #define DestroyNotify		33
+#define DestroyNotify		33
 
 
 
@@ -240,8 +240,8 @@ int		game_loop(t_env *env)
 	// 		env->actions[i].fun(env);
 	// 	}
 	// }
-	if(env->quitting == true)
-		g_actions[XK_Escape].fun(env);
+	if(env->quitting == true){printf("trying it quit\n");//, %p\n", g_actions[XK_Escape]);
+		g_actions[0].fun(env);}
 	return (0);
 }
 
@@ -388,10 +388,9 @@ void	start_cub_3d(t_env *env)
 	// // mlx_hook(env->win, DestroyNotify, StructureNotifyMask, key_hook, (void *)0);
 
 	mlx_hook(env->win, KeyPress, KeyPressMask, key_press, env);
-	// mlx_hook(env->win, KeyRelease, KeyReleaseMask, key_release, env);
 	mlx_hook(env->win, DestroyNotify, StructureNotifyMask, close_window, env);
 	mlx_loop_hook(env->mlx, game_loop, env);
     mlx_loop(env->mlx);
 
-	// free_env(env);
+	free_env(env);
 }
