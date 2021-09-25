@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/24 16:21:27 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/25 08:56:50 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,8 @@ void	print_img(t_env *env)
 	int i;
 
 	i = 0;
+	if (!env->win)
+		return ;
 	if (env->imgs[i].img != NULL)
 		mlx_destroy_image(env->mlx, env->imgs[i].img);
 

@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/25 07:59:02 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/25 08:55:15 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,10 +207,12 @@ int             key_press(int keycode, t_env *env)
 	while (i++ < MAX_ACTIONS)
 		if (keycode == g_actions[i].keycode)
 		{
+			// if(g_actions[i].fun(env))
 			g_actions[i].fun(env);
 			break ;
 		}
 	return keycode;
+	return 0;
 }
 
 int		close_window(t_env *env)
