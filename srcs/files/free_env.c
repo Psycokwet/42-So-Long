@@ -6,7 +6,7 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/25 13:37:29 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/27 13:27:20 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,6 @@ void	free_env(t_env *env)
 		mlx_destroy_display(env->mlx);
 		free(env->mlx);
 	}
+	if (env->counter_string)
+		free(env->counter_string);
 }

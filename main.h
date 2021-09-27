@@ -206,6 +206,7 @@ typedef struct s_env
 	t_block_properties	blocks_properties[MAX_BLOCKS_PROPERTIES];
 	t_main_character	main;
 	t_end_game			end_game[MAX_ACTION_END_GAME];
+	char				*counter_string;
 }	t_env;
 
 typedef struct s_parsing
