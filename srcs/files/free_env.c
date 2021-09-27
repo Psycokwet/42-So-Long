@@ -6,13 +6,13 @@
 /*   By: scarboni <scarboni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 18:54:29 by scarboni          #+#    #+#             */
-/*   Updated: 2021/09/27 13:27:20 by scarboni         ###   ########.fr       */
+/*   Updated: 2021/09/27 13:33:31 by scarboni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../main.h"
 
-void	free_env(t_env *env)
+static void	free_env_int(t_env *env)
 {
 	int	i;
 
@@ -32,6 +32,11 @@ void	free_env(t_env *env)
 	while (++i < MAX_BLOCKS_PROPERTIES)
 		if (env->blocks_properties[i].tex.img != NULL)
 			mlx_destroy_image(env->mlx, env->blocks_properties[i].tex.img);
+}
+
+void	free_env(t_env *env)
+{
+	free_env_int(env);
 	if (env->main.tex.img != NULL)
 		mlx_destroy_image(env->mlx, env->main.tex.img);
 	if (env->mlx)
